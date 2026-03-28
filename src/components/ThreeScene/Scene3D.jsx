@@ -45,17 +45,20 @@ const Scene3D = () => {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 512, 512);
 
-    // Add subtle lightning bolts with dark colors
-    const lightningColors = ['#1a1a1a', '#2a2a2a', '#1a1a1a'];
-    for (let i = 0; i < 5; i++) {
-      const x = Math.random() * 512;
-      const y = Math.random() * 512;
-      const color = lightningColors[Math.floor(Math.random() * lightningColors.length)];
-      drawLightningBolt(ctx, x, y, Math.random() * 50 + 30, color);
-    }
-
     const texture = new THREE.CanvasTexture(canvas);
     scene.background = texture;
+
+    // Add background plane
+    const planeGeometry = new THREE.PlaneGeometry(300, 300);
+    const planeMaterial = new THREE.MeshBasicMaterial({
+      color: 0x0a0a0a,
+      fog: false,
+      transparent: true,
+      opacity: 0.3,
+    });
+    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    plane.position.z = -50;
+    scene.add(plane);
 
     // Create particle system for 3D effect
     const particleGeometry = new THREE.BufferGeometry();
@@ -130,9 +133,10 @@ const Scene3D = () => {
 
     animate();
 
+    const container = containerRef.current;
     return () => {
       window.removeEventListener('resize', handleResize);
-      containerRef.current?.removeChild(renderer.domElement);
+      container?.removeChild(renderer.domElement);
       renderer.dispose();
     };
   }, []);
@@ -140,45 +144,5 @@ const Scene3D = () => {
   return <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }} />;
 };
 
-function drawLightningBolt(ctx, x, y, length, color) {
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 3;
-  ctx.shadowColor = color;
-  ctx.shadowBlur = 20;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-
-  let currentX = x;
-  let currentY = y;
-
-  ctx.beginPath();
-  ctx.moveTo(currentX, currentY);
-
-  for (let i = 0; i < length; i++) {
-    currentX += (Math.random() - 0.5) * 15;
-    currentY += Math.random() * 8;
-    ctx.lineTo(currentX, currentY);
-  }
-
-  ctx.stroke();
-
-  // Draw a brighter inner glow
-  ctx.strokeStyle = 'rgba(255, 200, 255, 0.8)';
-  ctx.lineWidth = 1;
-  ctx.shadowBlur = 5;
-  currentX = x;
-  currentY = y;
-  ctx.beginPath();
-  ctx.moveTo(currentX, currentY);
-
-  for (let i = 0; i < length; i++) {
-    currentX += (Math.random() - 0.5) * 15;
-    currentY += Math.random() * 8;
-    ctx.lineTo(currentX, currentY);
-  }
-
-  ctx.stroke();
-  ctx.shadowColor = 'transparent';
-}
 
 export default Scene3D;

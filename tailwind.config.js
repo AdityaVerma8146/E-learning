@@ -7,7 +7,7 @@ export default {
     theme: {
         extend: {
             colors: {
-                'lightning-black': '#0a0e27',
+                'lightning-black': '#000000',
                 'lightning-dark': '#0f1535',
                 'lightning-purple': '#6366f1',
                 'lightning-blue': '#3b82f6',

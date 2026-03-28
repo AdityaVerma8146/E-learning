@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 
-const CourseCard3D = ({ title, description, icon, delay }) => {
+const CourseCard3D = ({ title, description, icon, delay, image}) => {
   const cardRef = useRef(null);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [floatOffset, setFloatOffset] = useState(0);
 
   useEffect(() => {
     const card = cardRef.current;
@@ -32,13 +33,21 @@ const CourseCard3D = ({ title, description, icon, delay }) => {
     };
   }, []);
 
+  useEffect(() => {
+    const animationInterval = setInterval(() => {
+      setFloatOffset(Math.sin(Date.now() / 1000 + delay) * 10);
+    }, 50);
+
+    return () => clearInterval(animationInterval);
+  }, [delay]);
+
   return (
     <div
       ref={cardRef}
-      className="h-64 perspective cursor-pointer rounded-xl overflow-hidden"
+      className="min-h-[250px] flex flex-col perspective cursor-pointer rounded-xl overflow-hidden"
       style={{
         transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) ${
-          delay ? `translateY(${Math.sin(Date.now() / 1000 + delay) * 10}px)` : ''
+          delay ? `translateY(${floatOffset}px)` : ''
         }`,
         transition: 'transform 0.1s ease-out',
         transformStyle: 'preserve-3d',
@@ -47,7 +56,7 @@ const CourseCard3D = ({ title, description, icon, delay }) => {
       }}
     >
       <div
-        className="relative w-full h-full p-6 rounded-xl border border-lightning-purple/50 bg-gradient-to-br from-lightning-dark to-lightning-black shadow-2xl overflow-hidden"
+       className="relative w-full min-h-full p-6 flex flex-col rounded-xl border border-lightning-purple/50 bg-gradient-to-br from-lightning-dark to-lightning-black shadow-2xl overflow-hidden"
         style={{
           boxShadow: `0 0 30px rgba(99, 102, 241, 0.3), inset 0 0 30px rgba(99, 102, 241, 0.1)`,
         }}
@@ -71,13 +80,25 @@ const CourseCard3D = ({ title, description, icon, delay }) => {
         />
 
         {/* Content */}
-        <div className="relative z-10 h-full flex flex-col justify-between">
-          <div>
-            <div className="text-4xl mb-4">{icon}</div>
-            <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+          <div className="relative z-10 h-full flex flex-col pt-2">
+            {image && (
+              <div className="mb-4 overflow-hidden rounded-lg h-32 w-full bg-black/40 shadow-inner">
+                <img 
+                  src={image} 
+                  alt={title} 
+                  className="w-full h-full object-cover opacity-90 hover:scale-110 transition-transform duration-500" 
+                />
+              </div>
+            )}
+            
+            <div className="flex flex-col gap-2">
+              <div className="text-4xl">{icon}</div>
+              <h3 className="text-xl font-bold text-white tracking-tight">{title}</h3>
+              <p className="text-sm text-lightning-cyan/80 leading-relaxed">
+                {description}
+              </p>
+            </div>
           </div>
-          <p className="text-sm text-lightning-cyan/80">{description}</p>
-        </div>
 
         {/* Border glow effect */}
         <div

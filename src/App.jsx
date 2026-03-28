@@ -9,24 +9,28 @@ const App = () => {
       title: 'Web Development',
       description: 'Master modern web technologies and frameworks',
       icon: '🌐',
+      image: '/webdev.jpeg',
       delay: 0,
     },
     {
       title: '3D Graphics',
       description: 'Learn Three.js and create stunning 3D experiences',
       icon: '🎮',
+      image: '/3DGraphics.jpg',
       delay: 1,
     },
     {
       title: 'AI & Machine Learning',
       description: 'Dive into neural networks and deep learning',
       icon: '🤖',
+      image: '/AIML.jpeg',
       delay: 2,
     },
     {
       title: 'Cloud Computing',
       description: 'Deploy and scale applications on the cloud',
       icon: '☁️',
+      image: '/Cloud_Computing.jpeg',
       delay: 3,
     },
   ]
@@ -53,7 +57,7 @@ const App = () => {
               Experience the future of education with immersive 3D learning environments and
               cutting-edge technology
             </p>
-            <button className="px-8 py-4 rounded-full bg-gradient-to-r from-lightning-purple to-lightning-blue text-white font-bold text-lg hover:shadow-2xl hover:shadow-lightning-purple/50 transition-all duration-300 transform hover:scale-110">
+            <button className="px-12 py-3 rounded-full bg-gradient-to-r from-lightning-purple to-lightning-blue text-white font-bold text-lg hover:shadow-2xl hover:shadow-lightning-purple/50 transition-all duration-300 transform hover:scale-110">
               Start Your Journey
             </button>
           </div>
@@ -77,6 +81,7 @@ const App = () => {
                   description={course.description}
                   icon={course.icon}
                   delay={course.delay}
+                  image={course.image}
                 />
               ))}
             </div>
@@ -90,7 +95,7 @@ const App = () => {
               Why Choose E-Learn?
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               {[
                 {
                   title: 'Interactive Learning',
@@ -131,7 +136,7 @@ const App = () => {
               <p className="text-gray-300 mb-8 text-lg">
                 Join thousands of students already learning with E-Learn
               </p>
-              <button className="px-8 py-4 rounded-full bg-gradient-to-r from-lightning-purple to-lightning-cyan text-white font-bold text-lg hover:shadow-2xl hover:shadow-lightning-purple/50 transition-all duration-300 transform hover:scale-110">
+              <button className="px-12 py-3 rounded-full bg-gradient-to-r from-lightning-purple to-lightning-cyan text-white font-bold text-lg hover:shadow-2xl hover:shadow-lightning-purple/50 transition-all duration-300 transform hover:scale-110">
                 Enroll Now
               </button>
             </div>
